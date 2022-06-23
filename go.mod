@@ -3,10 +3,18 @@ module ntsc.ac.cn/ta/ta-monitor-gateway
 go 1.18
 
 require (
+	github.com/denisbrodbeck/machineid v1.0.1
+	github.com/influxdata/influxdb-client-go/v2 v2.9.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
 	ntsc.ac.cn/ta-registry v0.0.0
+)
+
+require (
+	github.com/deepmap/oapi-codegen v1.8.2 // indirect
+	github.com/influxdata/line-protocol v0.0.0-20200327222509-2487e7298839 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 )
 
 require (
@@ -31,7 +39,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.3.0 // indirect
-	github.com/x-cray/logrus-prefixed-formatter v0.5.2 // indirect
+	github.com/x-cray/logrus-prefixed-formatter v0.5.2
 	go.etcd.io/etcd/api/v3 v3.5.4 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.4 // indirect
 	go.etcd.io/etcd/client/v3 v3.5.4 // indirect

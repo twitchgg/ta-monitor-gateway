@@ -3,6 +3,8 @@ package gateway
 import (
 	"fmt"
 
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+	"github.com/influxdata/influxdb-client-go/v2/api"
 	"google.golang.org/grpc"
 	"ntsc.ac.cn/ta-registry/pkg/pb"
 	"ntsc.ac.cn/ta-registry/pkg/rpc"
@@ -11,6 +13,8 @@ import (
 type Server struct {
 	conf      *Config
 	rpcServer *rpc.Server
+	ifdClient influxdb2.Client
+	ifdWriter api.WriteAPIBlocking
 }
 
 func NewServer(conf *Config) (*Server, error) {
@@ -39,6 +43,10 @@ func NewServer(conf *Config) (*Server, error) {
 		return nil, fmt.Errorf("create grpc server failed: %s", err.Error())
 	}
 	server.rpcServer = rpcServ
+	server.ifdClient = influxdb2.NewClient(
+		conf.IfxDBConf.Endpoint, conf.IfxDBConf.Token)
+
+	server.ifdWriter = server.ifdClient.WriteAPIBlocking("", IFX_DB)
 	return &server, nil
 }
 

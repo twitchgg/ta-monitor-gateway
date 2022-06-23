@@ -13,8 +13,10 @@ import (
 )
 
 var envs struct {
-	listener string
-	certPath string
+	listener    string
+	certPath    string
+	ifxEndpoint string
+	ifxToken    string
 }
 
 var rootCmd = &cobra.Command{
@@ -35,6 +37,10 @@ func init() {
 		"rpc-listener", "tcp://0.0.0.0:1358", "grpc listener url")
 	rootCmd.Flags().StringVar(&envs.certPath,
 		"cert-path", "/etc/ntsc/ta/certs", "system certificates path")
+	rootCmd.Flags().StringVar(&envs.ifxEndpoint,
+		"ifx-endpoint", "http://localhost:8086", "influxdb endpoint")
+	rootCmd.Flags().StringVar(&envs.ifxToken,
+		"ifx-token", "", "influxdb token")
 }
 
 func Execute() {
@@ -64,6 +70,10 @@ func run(cmd *cobra.Command, args []string) {
 	serv, err := gateway.NewServer(&gateway.Config{
 		Listener: envs.listener,
 		CertPath: envs.certPath,
+		IfxDBConf: &gateway.InfluxDBConfig{
+			Endpoint: envs.ifxEndpoint,
+			Token:    envs.ifxToken,
+		},
 	})
 	if err != nil {
 		logrus.WithField("prefix", "cmd.root").

@@ -18,8 +18,14 @@ const (
 
 // Config monitor server config
 type Config struct {
-	Listener string
-	CertPath string
+	Listener  string
+	CertPath  string
+	IfxDBConf *InfluxDBConfig
+}
+
+type InfluxDBConfig struct {
+	Endpoint string
+	Token    string
 }
 
 func (c *Config) Check() error {
