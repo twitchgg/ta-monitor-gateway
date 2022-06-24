@@ -1,0 +1,8 @@
+# Default settings for NTSC TAS monitor gateway
+
+# Options to pass to TAS monitor gateway
+# --ifx-endpoint="http://10.25.133.27:8086" --ifx-token="admin:1234qwer" --logger-level=TRACE
+OPT_IFX_ENDPOINT=--ifx-endpoint="http://10.25.133.27:8086"
+OPT_IFX_TOKEN=--ifx-token="admin:1234qwer"
+OPT_LOGGER_LEVEL=--logger-level="TRACE"
+OPT_RPC_LISTENER=--rpc-listener="tcp://0.0.0.0:1358"

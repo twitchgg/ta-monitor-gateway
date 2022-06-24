@@ -1,0 +1,16 @@
+[Unit]
+Description=NTSC TAS monitor gateway
+Documentation=https://ntsc.ac.cn
+After=network-online.target local-fs.target remote-fs.target time-sync.target
+Wants=network-online.target local-fs.target remote-fs.target time-sync.target
+
+[Service]
+User=root
+Type=simple
+EnvironmentFile=/etc/default/ta-monitor-gateway
+ExecStart=/usr/local/bin/ta-monitor-gateway $OPT_IFX_ENDPOINT $OPT_IFX_TOKEN $OPT_LOGGER_LEVEL $OPT_RPC_LISTENER
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
