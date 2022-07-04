@@ -32,9 +32,11 @@ func (s *Server) Report(stream pb.MonitorService_ReportServer) error {
 				req.MachineID, req.Oid, req.ValueType, req.Value)
 		var value interface{}
 		switch req.ValueType {
+		case "TimeTicks":
+			continue
 		case "OctetString":
 			value = req.Value
-		case "Integer":
+		case "Integer", "Counter64", "Counter32":
 			value, err = strconv.Atoi(req.Value)
 			if err != nil {
 				logrus.WithField("prefix", "handler_report").
