@@ -2,7 +2,10 @@ package gateway
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"strconv"
+	"strings"
 	"time"
 
 	"google.golang.org/grpc/codes"
@@ -17,6 +20,27 @@ import (
 const (
 	IFX_DB = "TA-SNMP"
 )
+
+func (s *Server) Watch(req *pb.HealthCheckRequest, stream pb.Health_WatchServer) error {
+	if req.Service != "snmp-trap-service" {
+		return rpc.GenerateArgumentRequiredError("service name")
+	}
+
+	for {
+		time.Sleep(time.Second * 3)
+		if err := stream.Send(&pb.HealthCheckResponse{
+			Status: pb.HealthCheckResponse_SERVING,
+		}); err != nil {
+			if err == io.EOF || strings.Contains(err.Error(), "transport is closing") {
+				return nil
+			}
+			logrus.WithField("prefix", "handler_report").
+				Warnf("failed to send health check response: %v", err)
+			continue
+		}
+		fmt.Println("send")
+	}
+}
 
 func (s *Server) Report(stream pb.MonitorService_ReportServer) error {
 	for {

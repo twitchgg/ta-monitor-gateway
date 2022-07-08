@@ -38,6 +38,7 @@ func NewServer(conf *Config) (*Server, error) {
 			rpc.UnaryServerInterceptor(rpc.CertCheckFunc)),
 	}, func(g *grpc.Server) {
 		pb.RegisterMonitorServiceServer(g, &server)
+		pb.RegisterHealthServer(g, &server)
 	})
 	if err != nil {
 		return nil, fmt.Errorf("create grpc server failed: %s", err.Error())
