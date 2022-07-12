@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"strconv"
 	"strings"
@@ -38,7 +37,6 @@ func (s *Server) Watch(req *pb.HealthCheckRequest, stream pb.Health_WatchServer)
 				Warnf("failed to send health check response: %v", err)
 			continue
 		}
-		fmt.Println("send")
 	}
 }
 
@@ -48,9 +46,11 @@ func (s *Server) Report(stream pb.MonitorService_ReportServer) error {
 		if err != nil {
 			return rpc.GenerateError(codes.Canceled, err)
 		}
-		if err := rpc.CheckMachineID(stream.Context(), req.MachineID); err != nil {
-			return rpc.GenerateArgumentError("machine id")
-		}
+		// if err := rpc.CheckMachineID(stream.Context(), req.MachineID); err != nil {
+		// 	logrus.WithField("prefix", "handler_report").
+		// 		Warnf("failed to check machine id: %v", err)
+		// 	return rpc.GenerateArgumentError("machine id")
+		// }
 		logrus.WithField("prefix", "handler_report").
 			Tracef("[%s] report oid [%s],value type [%s] value: %v",
 				req.MachineID, req.Oid, req.ValueType, req.Value)
