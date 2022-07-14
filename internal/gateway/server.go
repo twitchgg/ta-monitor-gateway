@@ -6,8 +6,8 @@ import (
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/influxdata/influxdb-client-go/v2/api"
 	"google.golang.org/grpc"
-	"ntsc.ac.cn/ta-registry/pkg/pb"
-	"ntsc.ac.cn/ta-registry/pkg/rpc"
+	"ntsc.ac.cn/tas/tas-commons/pkg/pb"
+	"ntsc.ac.cn/tas/tas-commons/pkg/rpc"
 )
 
 type Server struct {
